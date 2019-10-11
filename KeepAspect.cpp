@@ -197,6 +197,11 @@ void OnGetMinMaxInfo(HWND hwnd, LPMINMAXINFO lpMinMaxInfo)
     lpMinMaxInfo->ptMinTrackSize.y = rc.bottom - rc.top;
 }
 
+void OnSize(HWND hwnd, UINT state, int cx, int cy)
+{
+    InvalidateRect(hwnd, NULL, TRUE);
+}
+
 INT_PTR CALLBACK
 DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -207,6 +212,7 @@ DialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         HANDLE_MSG(hwnd, WM_ERASEBKGND, OnEraseBkgnd);
         HANDLE_MSG(hwnd, WM_PAINT, OnPaint);
         HANDLE_MSG(hwnd, WM_GETMINMAXINFO, OnGetMinMaxInfo);
+        HANDLE_MSG(hwnd, WM_SIZE, OnSize);
         case WM_SIZING:
         {
             if (OnSizing(hwnd, (DWORD)wParam, (LPRECT)lParam))
